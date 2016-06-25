@@ -18,6 +18,7 @@
 
 package org.zywx.wbpalmstar.plugin.inputtextfieldview;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.zywx.wbpalmstar.engine.EBrowserView;
 import org.zywx.wbpalmstar.engine.universalex.EUExBase;
@@ -32,17 +33,17 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-public class EUExInputTextFieldView extends EUExBase{
+public class EUExInputTextFieldView extends EUExBase {
 
-	private static final String TAG = "uexInputTextFieldView";
-	private static final String INPUTTEXTFIELDVIEW_FUN_PARAMS_KEY = "inputTextFieldViewFunParamsKey";
+    private static final String TAG = "uexInputTextFieldView";
+    private static final String INPUTTEXTFIELDVIEW_FUN_PARAMS_KEY = "inputTextFieldViewFunParamsKey";
 
-	private static final int INPUTTEXTFIELDVIEW_MSG_OPEN = 0;
-	private static final int INPUTTEXTFIELDVIEW_MSG_CLOSE = 1;
-	private static final int INPUTTEXTFIELDVIEW_MSG_SET_INPUT_FOCUSED = 2;
-	private static final int INPUTTEXTFIELDVIEW_MSG_HIDE_KEYBOARD = 3;
-	private static final int INPUTTEXTFIELDVIEW_MSG_GET_INPUTBAR_HEIGHT = 4;
-    
+    private static final int INPUTTEXTFIELDVIEW_MSG_OPEN = 0;
+    private static final int INPUTTEXTFIELDVIEW_MSG_CLOSE = 1;
+    private static final int INPUTTEXTFIELDVIEW_MSG_SET_INPUT_FOCUSED = 2;
+    private static final int INPUTTEXTFIELDVIEW_MSG_HIDE_KEYBOARD = 3;
+    private static final int INPUTTEXTFIELDVIEW_MSG_GET_INPUTBAR_HEIGHT = 4;
+
     private ACEInputTextFieldView inputTextFieldView;
 
     public EUExInputTextFieldView(Context context, EBrowserView view) {
@@ -50,30 +51,30 @@ public class EUExInputTextFieldView extends EUExBase{
     }
 
     @Override
-	public void onHandleMessage(Message message) {
-		if (message == null) {
-			return;
-		}
-		switch (message.what) {
-		case INPUTTEXTFIELDVIEW_MSG_OPEN:
-			handleOpen(message);
-			break;
-		case INPUTTEXTFIELDVIEW_MSG_CLOSE:
-			handleClose();
-			break;
-		case INPUTTEXTFIELDVIEW_MSG_SET_INPUT_FOCUSED:
-			handleSetInputFocusedMsg();
-			break;
-		case INPUTTEXTFIELDVIEW_MSG_HIDE_KEYBOARD:
-			handleHideKeyboard();
-			break;
-		case INPUTTEXTFIELDVIEW_MSG_GET_INPUTBAR_HEIGHT:
-			handleGetInputBarHeight();
-			break;
-		default:
-			;
-		}
-	}
+    public void onHandleMessage(Message message) {
+        if (message == null) {
+            return;
+        }
+        switch (message.what) {
+        case INPUTTEXTFIELDVIEW_MSG_OPEN:
+            handleOpen(message);
+            break;
+        case INPUTTEXTFIELDVIEW_MSG_CLOSE:
+            handleClose();
+            break;
+        case INPUTTEXTFIELDVIEW_MSG_SET_INPUT_FOCUSED:
+            handleSetInputFocusedMsg();
+            break;
+        case INPUTTEXTFIELDVIEW_MSG_HIDE_KEYBOARD:
+            handleHideKeyboard();
+            break;
+        case INPUTTEXTFIELDVIEW_MSG_GET_INPUTBAR_HEIGHT:
+            handleGetInputBarHeight();
+            break;
+        default:
+            ;
+        }
+    }
 
     public void open(String[] params) {
         sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_OPEN, params);
@@ -82,19 +83,19 @@ public class EUExInputTextFieldView extends EUExBase{
     public void close(String[] params) {
         sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_CLOSE, params);
     }
-    
+
     public void setInputFocused(String[] params) {
-    	sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_SET_INPUT_FOCUSED,params);
+        sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_SET_INPUT_FOCUSED, params);
     }
-    
+
     public void hideKeyboard(String[] params) {
-    	sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_HIDE_KEYBOARD,params);
+        sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_HIDE_KEYBOARD, params);
     }
-    
+
     public void getInputBarHeight(String[] params) {
-    	sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_GET_INPUTBAR_HEIGHT,params);
+        sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_GET_INPUTBAR_HEIGHT, params);
     }
-    
+
     private void sendMessageWithType(int msgType, String[] params) {
         if (mHandler == null) {
             return;
@@ -107,80 +108,89 @@ public class EUExInputTextFieldView extends EUExBase{
         msg.setData(b);
         mHandler.sendMessage(msg);
     }
-    
+
     private void handleOpen(Message msg) {
         String[] params = msg.getData().getStringArray(
                 INPUTTEXTFIELDVIEW_FUN_PARAMS_KEY);
-        if (params == null || params.length < 1) return;
+        if (params == null || params.length < 1)
+            return;
         try {
-            if (inputTextFieldView != null) return;
+            if (inputTextFieldView != null)
+                return;
             JSONObject json = new JSONObject(params[0]);
-            inputTextFieldView = new ACEInputTextFieldView(mContext,json,this);
+            inputTextFieldView = new ACEInputTextFieldView(mContext, json, this);
 
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                    RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.MATCH_PARENT);
             addView2CurrentWindow(inputTextFieldView, lp);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-	private void handleClose() {
-		if (inputTextFieldView == null) {
-			return;
-		}
-		removeViewFromCurrentWindow(inputTextFieldView);
-		inputTextFieldView.onDestroy();
-		inputTextFieldView = null;
-	}
+
+    private void handleClose() {
+        if (inputTextFieldView == null) {
+            return;
+        }
+        removeViewFromCurrentWindow(inputTextFieldView);
+        inputTextFieldView.onDestroy();
+        inputTextFieldView = null;
+    }
 
     private void handleSetInputFocusedMsg() {
         if (inputTextFieldView != null) {
             inputTextFieldView.setInputFocused();
         }
     }
-    
+
     /**
      * 隐藏键盘的接口
+     * 
      * @param params
      */
-	private void handleHideKeyboard() {
-		if (inputTextFieldView != null) {
-			inputTextFieldView.outOfViewTouch();
-		}
-	}
-	
-	private void handleGetInputBarHeight() {
-		// 当前输入框的高度是固定的，50dp
-		int height = EUExUtil.dipToPixels(50);
-		String result = "{\"height\":" + "\"" + height + "\"}";
-		String jsCallBack = SCRIPT_HEADER
-				+ "if("
-				+ EInputTextFieldViewUtils.INPUTTEXTFIELDVIEW_FUN_CB_GET_INPUTBAR_HEIGHT
-				+ "){"
-				+ EInputTextFieldViewUtils.INPUTTEXTFIELDVIEW_FUN_CB_GET_INPUTBAR_HEIGHT
-				+ "('" + result + "');}";
-		onCallback(jsCallBack);
-	}
-    
+    private void handleHideKeyboard() {
+        if (inputTextFieldView != null) {
+            inputTextFieldView.outOfViewTouch();
+        }
+    }
+
+    private int handleGetInputBarHeight() {
+        // 当前输入框的高度是固定的，50dp
+        int height = EUExUtil.dipToPixels(50);
+        JSONObject result = new JSONObject();
+        try {
+            result.put("height", height);
+        } catch (JSONException e) {
+        }
+        String jsCallBack = SCRIPT_HEADER
+                + "if("
+                + EInputTextFieldViewUtils.INPUTTEXTFIELDVIEW_FUN_CB_GET_INPUTBAR_HEIGHT
+                + "){"
+                + EInputTextFieldViewUtils.INPUTTEXTFIELDVIEW_FUN_CB_GET_INPUTBAR_HEIGHT
+                + "('" + result.toString() + "');}";
+        onCallback(jsCallBack);
+        return height;
+    }
+
     private void addView2CurrentWindow(View child,
-			RelativeLayout.LayoutParams parms) {
-		int l = (int) (parms.leftMargin);
-		int t = (int) (parms.topMargin);
-		int w = parms.width;
-		int h = parms.height;
-		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(w, h);
-		lp.gravity = Gravity.BOTTOM;
-		lp.leftMargin = l;
-		lp.bottomMargin = parms.bottomMargin;
-		lp.topMargin = t;
-		adptLayoutParams(parms, lp);
-		mBrwView.addViewToCurrentWindow(child, lp);
-	}
+            RelativeLayout.LayoutParams parms) {
+        int l = (int) (parms.leftMargin);
+        int t = (int) (parms.topMargin);
+        int w = parms.width;
+        int h = parms.height;
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(w, h);
+        lp.gravity = Gravity.BOTTOM;
+        lp.leftMargin = l;
+        lp.bottomMargin = parms.bottomMargin;
+        lp.topMargin = t;
+        adptLayoutParams(parms, lp);
+        mBrwView.addViewToCurrentWindow(child, lp);
+    }
 
     @Override
     protected boolean clean() {
-    	Log.i(TAG, "clean");
+        Log.i(TAG, "clean");
         close(null);
         return false;
     }
