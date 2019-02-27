@@ -35,4 +35,5 @@ public class EInputTextFieldViewUtils {
     public final static String INPUTTEXTFIELDVIEW_FUN_ON_COMMIT_JSON = "uexInputTextFieldView.onCommitJson";
     public final static String INPUTTEXTFIELDVIEW_FUN_ON_KEYBOARD_SHOW = "uexInputTextFieldView.onKeyBoardShow";
     public final static String INPUTTEXTFIELDVIEW_FUN_CB_GET_INPUTBAR_HEIGHT = "uexInputTextFieldView.cbGetInputBarHeight";
+    public static final String ONFOCUS = "uexInputTextFieldView.cbFocusLose";
 }

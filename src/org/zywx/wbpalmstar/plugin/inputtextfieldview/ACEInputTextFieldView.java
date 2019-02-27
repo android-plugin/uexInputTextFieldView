@@ -97,6 +97,8 @@ public class ACEInputTextFieldView extends LinearLayout implements
     private boolean isKeyboardChange = false;
     private int keyBoardHeight = 0;
     private int mBrwViewHeight = 0;
+    private int LOSE_FOCUS = 1;
+
 
     public ACEInputTextFieldView(Context context, JSONObject params, EUExInputTextFieldView uexBaseObj) {
         super(context);
@@ -543,12 +545,16 @@ public class ACEInputTextFieldView extends LinearLayout implements
             toggleBtnEmojicon(!mEmojiconsLayout.isShown());
         } else if (id == CRes.plugin_inputtextfieldview_btn_send) {
             toggleBtnSend();
+            outOfViewTouch();
         } else if (id == CRes.plugin_inputtextfieldview_edit_input) {
             if (mPagerLayout.isShown()) {
                 mPagerLayout.setVisibility(View.GONE);
             }
         }
     }
+
+
+
 
     private void toggleBtnEmojicon(boolean visible) {
         if (visible) {
@@ -580,6 +586,7 @@ public class ACEInputTextFieldView extends LinearLayout implements
         jsonSendDataCallback();
         jsonSendDataJsonCallback();
         mEditText.setText(null);
+
     }
 
     private void jsonSendDataCallback() {
@@ -657,11 +664,11 @@ public class ACEInputTextFieldView extends LinearLayout implements
     }
 
     public void setInputFocused() {
-        mEditText.setFocusable(true);
-        mEditText.setFocusableInTouchMode(true);
-        mEditText.clearFocus();
-        mEditText.requestFocus();
-        mInputManager.showSoftInput(mEditText, 0);
+            mEditText.setFocusable(true);
+            mEditText.setFocusableInTouchMode(true);
+            mEditText.clearFocus();
+            mEditText.requestFocus();
+            mInputManager.showSoftInput(mEditText, 0);
     }
 
     /**
@@ -693,6 +700,7 @@ public class ACEInputTextFieldView extends LinearLayout implements
             goScroll(heightDifference);
         } else if (!mPagerLayout.isShown() && !isKeyBoardVisible) {
             backScroll();
+
         }
         boolean isChange = (isKeyBoardChange != isKeyBoardVisible);
         if (isChange) {
@@ -750,8 +758,22 @@ public class ACEInputTextFieldView extends LinearLayout implements
             lp.weight = 1;
             ((ViewGroup) mUexBaseObj.mBrwView).setLayoutParams(lp);
             ((ViewGroup) mUexBaseObj.mBrwView).invalidate();
+            cbFocusLose("关闭输入框");
         }
     }
+
+    /**
+     * 隐藏输入框
+     *
+     */
+    private void cbFocusLose(String jsonData) {
+        String js = mUexBaseObj.SCRIPT_HEADER + "if(" +EInputTextFieldViewUtils.ONFOCUS+ "){" +EInputTextFieldViewUtils.ONFOCUS+ "('"
+                + jsonData + "')}";
+        mUexBaseObj.onCallback(js);
+    }
+
+
+
 
     private void changeKeyBoardHeight(int keyBoardHeight) {
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mPagerLayout.getLayoutParams();
