@@ -45,6 +45,10 @@
                 console.log("onKeyBoardShow "+ jsonString);
                 setTimeout(function (){window.scrollTo(0, document.body.scrollHeight);},20);
             }
+            uexInputTextFieldView.cbFocusLose = function(){
+              uexInputTextFieldView.close();
+            }
+
         }
 
         function openKeyboard(){

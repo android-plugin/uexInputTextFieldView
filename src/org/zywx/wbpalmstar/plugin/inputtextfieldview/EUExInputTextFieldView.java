@@ -37,6 +37,7 @@ public class EUExInputTextFieldView extends EUExBase {
     private static final String TAG = "uexInputTextFieldView";
     private static final String INPUTTEXTFIELDVIEW_FUN_PARAMS_KEY = "inputTextFieldViewFunParamsKey";
 
+
     private static final int INPUTTEXTFIELDVIEW_MSG_OPEN = 0;
     private static final int INPUTTEXTFIELDVIEW_MSG_CLOSE = 1;
     private static final int INPUTTEXTFIELDVIEW_MSG_SET_INPUT_FOCUSED = 2;
@@ -44,6 +45,7 @@ public class EUExInputTextFieldView extends EUExBase {
     private static final int INPUTTEXTFIELDVIEW_MSG_GET_INPUTBAR_HEIGHT = 4;
 
     private ACEInputTextFieldView inputTextFieldView;
+
 
     public EUExInputTextFieldView(Context context, EBrowserView view) {
         super(context, view);
@@ -68,7 +70,7 @@ public class EUExInputTextFieldView extends EUExBase {
                 handleHideKeyboard();
                 break;
             default:
-                ;
+
         }
     }
 
@@ -86,6 +88,7 @@ public class EUExInputTextFieldView extends EUExBase {
 
     public void hideKeyboard(String[] params) {
         sendMessageWithType(INPUTTEXTFIELDVIEW_MSG_HIDE_KEYBOARD, params);
+
     }
 
     public int getInputBarHeight(String[] params) {
@@ -144,7 +147,9 @@ public class EUExInputTextFieldView extends EUExBase {
     private void handleSetInputFocusedMsg() {
         if (inputTextFieldView != null) {
             inputTextFieldView.setInputFocused();
+
         }
+
     }
 
     /**
@@ -153,8 +158,11 @@ public class EUExInputTextFieldView extends EUExBase {
     private void handleHideKeyboard() {
         if (inputTextFieldView != null) {
             inputTextFieldView.outOfViewTouch();
+
         }
+
     }
+
 
     private void addView2CurrentWindow(View child,
                                        RelativeLayout.LayoutParams parms) {
