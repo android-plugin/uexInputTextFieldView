@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.zywx.wbpalmstar.widgetone.uexinputtextfieldview"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <application
         android:name="org.zywx.wbpalmstar.widgetone.WidgetOneApplication"
         android:allowClearUserData="false"
         android:icon="@drawable/icon"
-        android:label="@string/app_name" >
+        android:label="uexInputTextFieldView"
+        android:hardwareAccelerated="true"
+        tools:replace="android:label,android:hardwareAccelerated">
+
         <activity android:name="org.zywx.wbpalmstar.engine.LoadingActivity"
-            android:configChanges="keyboardHidden|orientation"
             android:theme="@style/browser_loading_theme"
-            android:screenOrientation="portrait"
             android:launchMode="standard"
             >
             <intent-filter>
@@ -24,18 +26,14 @@
 
     </application>
 
-    <uses-sdk android:minSdkVersion="4"/>
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>

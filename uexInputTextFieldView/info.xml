@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexInputTextFieldView" version="4.0.1" build="0">
-        <info>1:发表评论后,键盘没有收起</info>
+        uexName="uexInputTextFieldView" version="4.3.2" build="2020010301">
+        <info>2:修复华为手机中存在底部虚拟导航键的情况下，判断键盘弹出的逻辑错误从而导致页面点击可能导致无响应的问题。</info>
+        <build>1:发表评论后,键盘没有收起</build>
         <build>0:4.0</build>
     </plugin>
 </uexplugins>
