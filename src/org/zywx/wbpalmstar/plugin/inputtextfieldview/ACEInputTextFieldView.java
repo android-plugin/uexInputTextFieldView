@@ -683,7 +683,9 @@ public class ACEInputTextFieldView extends LinearLayout implements
                 .getHeight();
         int heightDifference = screenHeight - (r.bottom);
         boolean isKeyBoardChange = isKeyBoardVisible;
-        if (heightDifference > 100) {
+        if (heightDifference > 128) {
+            // note：此处原来设置的是大于100，现在改为了128。
+            // 这个地方的逻辑目的是用屏幕总高度减去屏幕可视高度，而最终求得屏幕下部的高度。键盘弹起时，这个差值应该是比较大的。但是键盘未弹起时，有两种情况。普通的全面屏，底部没有虚拟导航键的话，差值为0；有虚拟导航键的，差值应该是虚拟导航键的高度（比如华为机型）。根据调试发现，虚拟导航键高度一般为128。故此处定义为128。
             isKeyBoardVisible = true;
             //弹出键盘的时候,判断下俩者有弹出状态则设置隐藏  2015-08-12
             if (mPagerLayout.isShown()) {
